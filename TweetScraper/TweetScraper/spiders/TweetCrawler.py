@@ -30,7 +30,7 @@ class TweetScraper(CrawlSpider):
         # generate request: https://twitter.com/search?q=[xxx] for each query
         for query in self.queries:
             url = 'https://twitter.com/search?q=%s'%urllib.quote_plus(query)
-            yield http.Request(url, callback=self.parse_search_page, headers = {'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'})
+            yield http.Request(url, callback=self.parse_search_page)
 
 
     def parse_search_page(self, response):
@@ -46,7 +46,7 @@ class TweetScraper(CrawlSpider):
             url = 'https://twitter.com/i/search/timeline?q=%s&' \
                   'include_available_features=1&include_entities=1&max_position=%s' % \
                   (urllib.quote_plus(query), scroll_cursor)
-            yield http.Request(url, callback=self.parse_more_page, headers = {'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'})
+            yield http.Request(url, callback=self.parse_more_page)
 
         # TODO: # get refresh page
         # tmp = self.reRefreshCursor.search(response.body)
@@ -68,7 +68,7 @@ class TweetScraper(CrawlSpider):
         url = 'https://twitter.com/i/search/timeline?q=%s&' \
               'include_available_features=1&include_entities=1&max_position=%s' % \
                (urllib.quote_plus(query), min_position)
-        yield http.Request(url, callback=self.parse_more_page, headers = {'User-Agent' : 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'})
+        yield http.Request(url, callback=self.parse_more_page)
 
 
     def parse_tweets_block(self, html_page):
