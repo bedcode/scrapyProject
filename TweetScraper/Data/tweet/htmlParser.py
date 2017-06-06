@@ -21,11 +21,11 @@ for filename in os.listdir(os.getcwd()):
     # search for the text of the tweet
     start = text.find('<p class="TweetTextSize TweetTextSize--jumbo js-tweet-text tweet-text"')
     t = text[start:]
-    if t == 1:
+    if t == -1:
         continue
     end = t.find('</p>')
     t = t[:end]
-    if t == 1:
+    if t == -1:
         continue
     parseText = html2text.html2text(t)
     with open('tweetText.txt', 'a') as txtFile:
