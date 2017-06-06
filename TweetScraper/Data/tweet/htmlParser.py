@@ -4,12 +4,11 @@ import os
 import requests
 
 for filename in os.listdir(os.getcwd()):
-    if (filename == 'htmlParser.py'):
+    if (filename in ['htmlParser.py', '.gitignore']):
         continue
     # open all files in current directory except the parser
-    f = open(filename, 'r')
-    data = json.load(f)
-    f.close()
+    with open(filename, 'r') as f:
+        data = json.load(f)
 
     # complete url
     url = 'https://twitter.com' + data['url']
@@ -29,4 +28,6 @@ for filename in os.listdir(os.getcwd()):
     if t == 1:
         continue
     parseText = html2text.html2text(t)
-    print(parseText)
+    with open('tweetText.txt', 'a') as txtFile:
+        txtFile.write('URL: ' + data['url'] + ' TEXT:' + parseText)
+    #print(parseText)
